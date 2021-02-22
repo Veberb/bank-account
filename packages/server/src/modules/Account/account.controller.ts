@@ -1,17 +1,12 @@
 import { Router, Request, Response } from 'express'
 const router = Router({ mergeParams: true })
-import UserService from './user.service'
+import UserService from './account.service'
 
 module.exports = app => {
-  app.use('/users', router)
+  app.use('/accounts', router)
 }
 
 router.post('/', async (req: Request, res: Response) => {
   const users = await UserService.create(req.body)
   return res.json(users)
-})
-
-router.get('/', async (req: Request, res: Response) => {
-  const user = await UserService.getOne()
-  return res.json(user)
 })

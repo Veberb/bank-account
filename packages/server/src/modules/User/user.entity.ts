@@ -4,8 +4,11 @@ import {
   Column,
   BaseEntity,
   CreateDateColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
+  JoinColumn,
+  OneToOne
 } from 'typeorm'
+import { Account } from '../Account/account.entity'
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -23,4 +26,8 @@ export class User extends BaseEntity {
 
   @UpdateDateColumn({ nullable: true })
   updatedAt?: Date
+
+  @OneToOne(type => Account, { cascade: true })
+  @JoinColumn()
+  account?: Account
 }
