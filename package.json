@@ -1,0 +1,17 @@
+{
+  "name": "bank-account",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Veberb/bank-account.git",
+  "author": "Lucas Veber <lucasveberdebrida@gmail.com>",
+  "license": "MIT",
+  "private": "true",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "start:server": "yarn workspace @bank-account/server start"
+  }
+}
