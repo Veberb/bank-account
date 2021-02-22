@@ -13,5 +13,9 @@
   },
   "scripts": {
     "start:server": "yarn workspace @bank-account/server start"
+  },
+  "devDependencies": {
+    "typescript": "^4.1.2",
+    "@bank-account/eslint-config": "*"
   }
 }

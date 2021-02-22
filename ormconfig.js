@@ -12,5 +12,5 @@ module.exports = {
   port: process.env.DB_PORT,
   synchronize: true,
   logging: false,
-  entities: [__dirname + '/packages/server/src/modules/*/*.entity.js']
+  entities: [__dirname + '/packages/server/src/modules/*/*.entity.ts']
 }
