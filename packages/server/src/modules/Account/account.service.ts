@@ -12,6 +12,10 @@ class AccountService {
   async create(args: Account) {
     return this.repository.save(args)
   }
+
+  async getOne(id: number) {
+    return this.repository.findOne({ id }, { relations: ['user'] })
+  }
 }
 
 export default new AccountService()
