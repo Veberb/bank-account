@@ -6,9 +6,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToOne,
-  JoinColumn
+  JoinColumn,
+  OneToMany
 } from 'typeorm'
 import { User } from '../User/user.entity'
+import { Transaction } from '../Transaction/transaction.entity'
 
 @Entity('accounts')
 export class Account extends BaseEntity {
@@ -26,4 +28,10 @@ export class Account extends BaseEntity {
     user => user.account
   )
   user: User
+
+  @OneToMany(
+    () => Transaction,
+    transaction => transaction.account
+  )
+  transactions: Transaction[]
 }

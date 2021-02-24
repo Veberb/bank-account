@@ -16,6 +16,10 @@ class AccountService {
   async getOne(id: number) {
     return this.repository.findOne({ id }, { relations: ['user'] })
   }
+
+  async getFirst() {
+    return this.repository.findOne({ relations: ['user'] })
+  }
 }
 
 export default new AccountService()
