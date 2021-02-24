@@ -7,23 +7,19 @@ import {
   Text,
   Flex,
   Grid,
-  GridItem,
   FormControl,
-  FormLabel,
   Box,
   VStack,
   HStack,
-  Select,
-  Stack,
-  Button,
-  Spacer
+  Button
 } from '@chakra-ui/react'
+import { api, CREATE_USER } from '../../axios'
 
 export const UserForm: React.FC = () => {
   const formik = useFormik({
     initialValues: { name: '', email: '' },
-    onSubmit: () => {
-      console.log('oi')
+    onSubmit: async values => {
+      await api.post(CREATE_USER, values)
     }
   })
 
