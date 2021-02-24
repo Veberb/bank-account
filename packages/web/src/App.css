@@ -1,0 +1,68 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+nav {
+  display: flex;
+}
+nav:before {
+  content: '';
+  flex: 1;
+  background: white;
+  /* for reference */
+}
+nav ul {
+  display: flex;
+  background: white;
+  list-style-type: none;
+  flex: 11;
+}
+nav ul a {
+  display: block;
+  padding: 20px 20px 0 0;
+  color: white;
+  text-decoration: none;
+}
+.content {
+  flex: 1;
+  display: flex;
+}
+main {
+  background: #e5e5e5;
+  flex: 10;
+  display: flex !important;
+  justify-content: center;
+  padding-top: 50px;
+}
+aside {
+  background: white;
+  flex: 1;
+}
+footer {
+  background: white;
+}
+
+.mainContainer {
+  height: 100% !important;
+}
+
+input.chakra-input {
+  background: white;
+}
+
+select.chakra-select {
+  background: white;
+}

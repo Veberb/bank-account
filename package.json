@@ -12,7 +12,8 @@
     ]
   },
   "scripts": {
-    "start:server": "yarn workspace @bank-account/server start"
+    "start:server": "yarn workspace @bank-account/server start",
+    "start:web": "yarn workspace @bank-account/web start"
   },
   "devDependencies": {
     "typescript": "^4.1.2",
