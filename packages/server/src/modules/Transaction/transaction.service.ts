@@ -12,8 +12,8 @@ class TransactionService {
     this.repository = getRepository('Transaction')
   }
 
-  async checkIfThereIsEnougthMoney(accountId: number, ammount: number) {
-    const [deposit, withdraw, payment] = await this.repository
+  async sumTransactionsValues(accountId: number) {
+    return this.repository
       .createQueryBuilder('transaction')
       .leftJoinAndSelect('transaction.account', 'account')
       .where('account.id = :id', { id: accountId })
@@ -22,6 +22,12 @@ class TransactionService {
       .groupBy('transaction.type')
       .orderBy('transaction.type', 'ASC')
       .getRawMany()
+  }
+
+  async checkIfThereIsEnougthMoney(accountId: number, ammount: number) {
+    const [deposit, withdraw, payment] = await this.sumTransactionsValues(
+      accountId
+    )
 
     if (!(+deposit.sum > +withdraw.sum + +payment.sum + +ammount))
       throw new Error('Not enougth money')
@@ -43,8 +49,27 @@ class TransactionService {
     return this.repository.findOne({ id })
   }
 
+  async balance() {
+    const account = await AccountService.getFirst()
+    const [deposit, withdraw, payment] = await this.sumTransactionsValues(
+      account.id
+    )
+
+    return +deposit.sum - +withdraw.sum - +payment.sum
+  }
+
   async list(skip: number = 0, take: number = 10) {
-    return this.repository.find({ take, skip, order: { createdAt: 'DESC' } })
+    const transactionsQuery = this.repository.find({
+      take,
+      skip,
+      order: { createdAt: 'DESC' }
+    })
+    const balanceQuery = this.balance()
+    const [transactions, balance] = await Promise.all([
+      transactionsQuery,
+      balanceQuery
+    ])
+    return { transactions, balance }
   }
 }
 

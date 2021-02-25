@@ -32,11 +32,13 @@ import Toast from '../../hooks/Toast'
 export const Detail = () => {
   const [value, setValue] = useState('')
   const { showError, showSuccess } = Toast()
-  const [{ user, userTransactions, loading, pagination }, setState] = useState<
-    any
-  >({
+  const [
+    { user, userTransactions, loading, pagination, balance },
+    setState
+  ] = useState<any>({
     userTransactions: [],
     user: {},
+    balance: 0,
     loading: false,
     pagination: {
       skip: 0,
@@ -51,10 +53,11 @@ export const Detail = () => {
 
     setState(state => ({
       ...state,
-      userTransactions: [...state.userTransactions, ...res.data],
+      userTransactions: [...state.userTransactions, ...res.data.transactions],
+      balance: res.data.balance,
       pagination: {
         ...state.pagination,
-        hasMore: res.data.length === pagination.take
+        hasMore: res.data.transactions.length === pagination.take
       }
     }))
   }
@@ -197,6 +200,7 @@ export const Detail = () => {
               </Box>
             </HStack>
           </form>
+          <Text fontSize="1xl">Balance: {currencyFormat(balance)}</Text>
           <div id="scrollableDiv" style={{ height: 400, overflow: 'auto' }}>
             <InfiniteScroll
               dataLength={userTransactions.length}
