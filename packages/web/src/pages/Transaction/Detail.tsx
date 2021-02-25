@@ -27,9 +27,11 @@ import {
   CREATE_TRANSACTION,
   GET_USER
 } from '../../axios'
+import Toast from '../../hooks/Toast'
 
 export const Detail = () => {
   const [value, setValue] = useState('')
+  const { showError, showSuccess } = Toast()
   const [{ user, userTransactions, loading, pagination }, setState] = useState<
     any
   >({
@@ -93,6 +95,7 @@ export const Detail = () => {
           ...values,
           value: onlyNumbers(value)
         })
+        showSuccess()
         setValue('')
         setState(state => ({
           ...state,
@@ -102,6 +105,7 @@ export const Detail = () => {
         getUserTransactions()
       } catch (error) {
         console.log(error)
+        showError()
       }
     }
   })
