@@ -17,7 +17,7 @@ class UserService {
   }
 
   async getOne() {
-    return this.repository.find({ relations: ['account'] })
+    return this.repository.findOne({ relations: ['account'] })
   }
 }
 
