@@ -23,7 +23,7 @@ class TransactionService {
       .orderBy('transaction.type', 'ASC')
       .getRawMany()
 
-    if (!(+deposit.sum > +withdraw.sum + +payment.sum + ammount))
+    if (!(+deposit.sum > +withdraw.sum + +payment.sum + +ammount))
       throw new Error('Not enougth money')
   }
 

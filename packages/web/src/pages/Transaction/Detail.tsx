@@ -12,14 +12,24 @@ import {
   Td,
   HStack,
   FormControl,
-  Input
+  Input,
+  FormLabel,
+  Select,
+  Button
 } from '@chakra-ui/react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 
 import { format } from 'date-fns'
-import { api, LIST_TRANSACTION, GET_USER } from '../../axios'
+import { Form, useFormik } from 'formik'
+import {
+  api,
+  LIST_TRANSACTION,
+  CREATE_TRANSACTION,
+  GET_USER
+} from '../../axios'
 
 export const Detail = () => {
+  const [value, setValue] = useState('')
   const [{ user, userTransactions, loading, pagination }, setState] = useState<
     any
   >({
@@ -47,8 +57,12 @@ export const Detail = () => {
     }))
   }
 
+  const onlyNumbers = value => {
+    return value.replace(/\D/g, '')
+  }
+
   const currencyFormat = num => {
-    const x = num / 100
+    const x = onlyNumbers(num.toString()) / 100
     return 'R$' + x.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
   }
 
@@ -70,6 +84,27 @@ export const Detail = () => {
     getUserDetail()
     getUserTransactions()
   }, [])
+
+  const formik = useFormik({
+    initialValues: { type: 'payment' },
+    onSubmit: async values => {
+      try {
+        const res = await api.post(CREATE_TRANSACTION, {
+          ...values,
+          value: onlyNumbers(value)
+        })
+        setValue('')
+        setState(state => ({
+          ...state,
+          userTransactions: [],
+          pagination: { ...state.pagination, page: 0 }
+        }))
+        getUserTransactions()
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  })
 
   if (loading)
     return (
@@ -115,35 +150,50 @@ export const Detail = () => {
               </FormControl>
             </Box>
           </HStack>
-          <HStack direction="row" display="flex" justifyContent="start">
-            <Box>
-              <FormControl id="first-name">
-                <Input
-                  value={user.name}
-                  placeholder="Name"
-                  size="lg"
-                  id="name"
-                  name="name"
-                  type="text"
-                  disabled
-                />
-              </FormControl>
-            </Box>
-            <Box>
-              <FormControl id="email">
-                <Input
-                  id="email"
-                  name="email"
-                  type="text"
-                  disabled
-                  value={user.email}
-                  placeholder="Email "
-                  size="lg"
-                />
-              </FormControl>
-            </Box>
-          </HStack>
-          <div id="scrollableDiv" style={{ height: 200, overflow: 'auto' }}>
+          <form onSubmit={formik.handleSubmit}>
+            <HStack direction="row" display="flex" justifyContent="start">
+              <Box>
+                <FormControl id="value">
+                  <Input
+                    placeholder="Value"
+                    size="lg"
+                    onChange={evt => {
+                      console.log(evt.currentTarget.value)
+                      setValue(currencyFormat(evt.currentTarget.value))
+                    }}
+                    value={value}
+                    id="value"
+                    name="value"
+                    type="text"
+                  />
+                </FormControl>
+              </Box>
+              <Box>
+                <FormControl id="type">
+                  <Select
+                    onChange={formik.handleChange}
+                    value={formik.values.type}
+                  >
+                    <option value="deposit">Depositar</option>
+                    <option value="withdraw">Retirar</option>
+                    <option value="payment">Pagar</option>
+                  </Select>
+                </FormControl>
+              </Box>
+              <Box>
+                <Button
+                  isLoading={formik.isSubmitting}
+                  loadingText="Cadastrando"
+                  colorScheme="teal"
+                  variant="solid"
+                  type="submit"
+                >
+                  Continuar
+                </Button>
+              </Box>
+            </HStack>
+          </form>
+          <div id="scrollableDiv" style={{ height: 400, overflow: 'auto' }}>
             <InfiniteScroll
               dataLength={userTransactions.length}
               next={fetchMoreTransactions}
