@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react'
 import React from 'react'
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import { RegisterUser } from './pages'
+import { RegisterUser, Detail } from './pages'
 
 const Routes: React.FC = () => {
   return (
@@ -28,6 +28,7 @@ const Routes: React.FC = () => {
           <main>
             <Switch>
               <Route exact path="/" component={RegisterUser} />
+              <Route exact path="/transactions" component={Detail} />
             </Switch>
           </main>
           <aside>Sidebar 2</aside>

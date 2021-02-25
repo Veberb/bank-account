@@ -13,13 +13,17 @@ import {
   HStack,
   Button
 } from '@chakra-ui/react'
+import { useHistory } from 'react-router-dom'
+
 import { api, CREATE_USER } from '../../axios'
 
 export const UserForm: React.FC = () => {
+  const history = useHistory()
   const formik = useFormik({
     initialValues: { name: '', email: '' },
     onSubmit: async values => {
       await api.post(CREATE_USER, values)
+      history.push(`/transactions`)
     }
   })
 
