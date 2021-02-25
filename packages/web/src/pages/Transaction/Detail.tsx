@@ -128,7 +128,7 @@ export const Detail = () => {
     <>
       <Box justifyContent="center" alignItems="center" display="flex">
         <VStack spacing={4} align="stretch">
-          <Text fontSize="2xl">Account details</Text>
+          <Text fontSize="2xl">Detalhes da conta</Text>
           <HStack direction="row" display="flex" justifyContent="start">
             <Box>
               <FormControl id="first-name">
@@ -217,7 +217,7 @@ export const Detail = () => {
               }
               endMessage={
                 <p style={{ textAlign: 'center' }}>
-                  <b>Yay! You have seen it all</b>
+                  <b>Isso é tudo :) </b>
                 </p>
               }
               scrollableTarget="scrollableDiv"
@@ -227,10 +227,10 @@ export const Detail = () => {
                   <Tr>
                     <Th>#</Th>
                     <Th>ID</Th>
-                    <Th>Description</Th>
-                    <Th>Type</Th>
-                    <Th>Value</Th>
-                    <Th>Date</Th>
+                    <Th>Descrição</Th>
+                    <Th>Tipo</Th>
+                    <Th>Valor</Th>
+                    <Th>Data</Th>
                   </Tr>
                 </Thead>
                 <Tbody>

@@ -4,8 +4,8 @@ const ShowToast = () => {
   const toast = useToast()
   const showError = () => {
     toast({
-      title: 'Sorry.',
-      description: 'Sorry but you dont have enougth money .',
+      title: 'Ocorreu um problema.',
+      description: 'Parece que você não tem dinheiro suficiente.',
       status: 'error',
       duration: 4000,
       isClosable: true
@@ -14,8 +14,8 @@ const ShowToast = () => {
 
   const showSuccess = () => {
     toast({
-      title: 'Yay.',
-      description: 'Transaction completed!.',
+      title: 'Sucesso',
+      description: 'Transação completa!',
       status: 'success',
       duration: 4000,
       isClosable: true

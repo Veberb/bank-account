@@ -32,7 +32,7 @@ export const UserForm: React.FC = () => {
       <form onSubmit={formik.handleSubmit}>
         <VStack spacing={4} align="stretch">
           <Text fontSize="2xl">
-            Please, fill this form to create your account
+            Por favor, preencha os dados para cadastrar o usuário
           </Text>
           <HStack direction="row" display="flex" justifyContent="center">
             <Box>
@@ -40,7 +40,7 @@ export const UserForm: React.FC = () => {
                 <Input
                   onChange={formik.handleChange}
                   value={formik.values.name}
-                  placeholder="Name"
+                  placeholder="Nome"
                   size="lg"
                   id="name"
                   name="name"
