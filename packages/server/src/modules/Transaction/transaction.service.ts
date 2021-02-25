@@ -28,19 +28,23 @@ class TransactionService {
   }
 
   async create(args: Transaction) {
-    const afactory = transactionFactory(args)
+    const transactionObj = transactionFactory(args)
     const account = await AccountService.getFirst()
 
     if (args.type !== TransactionType.Deposit) {
       await this.checkIfThereIsEnougthMoney(account.id, args.value)
     }
 
-    afactory.account = account
-    /* return this.repository.save(afactory) */
+    transactionObj.account = account
+    return this.repository.save(transactionObj)
   }
 
   async getOne(id: number) {
     return this.repository.findOne({ id })
+  }
+
+  async list(skip: number = 0, take: number = 10) {
+    return this.repository.find({ take, skip, order: { createdAt: 'DESC' } })
   }
 }
 

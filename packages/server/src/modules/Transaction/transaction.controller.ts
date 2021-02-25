@@ -16,7 +16,7 @@ router.post('/', async (req: Request, res: Response, next) => {
 })
 
 router.get('/', async (req: Request, res: Response) => {
-  const transactions = await TransactionService.fetch(+req.params.id)
+  const transactions = await TransactionService.list()
   return res.json(transactions)
 })
 
