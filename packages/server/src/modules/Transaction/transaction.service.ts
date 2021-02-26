@@ -53,9 +53,11 @@ class TransactionService {
 
   async balance() {
     const account = await AccountService.getFirst()
-    const [deposit, withdraw, payment] = await this.sumTransactionsValues(
-      account.id
-    )
+    const [
+      deposit,
+      withdraw = { sum: 0 },
+      payment = { sum: 0 }
+    ] = await this.sumTransactionsValues(account.id)
 
     return +deposit.sum - +withdraw.sum - +payment.sum
   }

@@ -67,6 +67,7 @@ export const Detail = () => {
   }
 
   const currencyFormat = num => {
+    if (!num) return 'R$ 0'
     const x = onlyNumbers(num.toString()) / 100
     return 'R$' + x.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
   }
@@ -201,55 +202,60 @@ export const Detail = () => {
             </HStack>
           </form>
           <Text fontSize="1xl">Balance: {currencyFormat(balance)}</Text>
-          <div id="scrollableDiv" style={{ height: 400, overflow: 'auto' }}>
-            <InfiniteScroll
-              dataLength={userTransactions.length}
-              next={fetchMoreTransactions}
-              hasMore={pagination.hasMore}
-              loader={
-                <Spinner
-                  thickness="4px"
-                  speed="0.65s"
-                  emptyColor="gray.200"
-                  color="blue.500"
-                  size="xl"
-                />
-              }
-              endMessage={
-                <p style={{ textAlign: 'center' }}>
-                  <b>Isso é tudo :) </b>
-                </p>
-              }
-              scrollableTarget="scrollableDiv"
-            >
-              <Table variant="striped" colorScheme="teal">
-                <Thead>
-                  <Tr>
-                    <Th>#</Th>
-                    <Th>ID</Th>
-                    <Th>Descrição</Th>
-                    <Th>Tipo</Th>
-                    <Th>Valor</Th>
-                    <Th>Data</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {userTransactions.map((repo, index) => (
-                    <Tr key={index}>
-                      <Td>{index + 1}</Td>
-                      <Td>{repo['id']}</Td>
-                      <Td>{repo['description']}</Td>
-                      <Td>{repo['type']}</Td>
-                      <Td>{currencyFormat(repo['value'])}</Td>
-                      <Td>
-                        {format(new Date(repo['createdAt']), 'dd-MM-yyyy')}
-                      </Td>
+          {!userTransactions.length && (
+            <Text fontSize="1xl">Nenhuma transação </Text>
+          )}
+          {userTransactions.length && (
+            <div id="scrollableDiv" style={{ height: 400, overflow: 'auto' }}>
+              <InfiniteScroll
+                dataLength={userTransactions.length}
+                next={fetchMoreTransactions}
+                hasMore={pagination.hasMore}
+                loader={
+                  <Spinner
+                    thickness="4px"
+                    speed="0.65s"
+                    emptyColor="gray.200"
+                    color="blue.500"
+                    size="xl"
+                  />
+                }
+                endMessage={
+                  <p style={{ textAlign: 'center' }}>
+                    <b>Isso é tudo :) </b>
+                  </p>
+                }
+                scrollableTarget="scrollableDiv"
+              >
+                <Table variant="striped" colorScheme="teal">
+                  <Thead>
+                    <Tr>
+                      <Th>#</Th>
+                      <Th>ID</Th>
+                      <Th>Descrição</Th>
+                      <Th>Tipo</Th>
+                      <Th>Valor</Th>
+                      <Th>Data</Th>
                     </Tr>
-                  ))}
-                </Tbody>
-              </Table>
-            </InfiniteScroll>
-          </div>
+                  </Thead>
+                  <Tbody>
+                    {userTransactions.map((repo, index) => (
+                      <Tr key={index}>
+                        <Td>{index + 1}</Td>
+                        <Td>{repo['id']}</Td>
+                        <Td>{repo['description']}</Td>
+                        <Td>{repo['type']}</Td>
+                        <Td>{currencyFormat(repo['value'])}</Td>
+                        <Td>
+                          {format(new Date(repo['createdAt']), 'dd-MM-yyyy')}
+                        </Td>
+                      </Tr>
+                    ))}
+                  </Tbody>
+                </Table>
+              </InfiniteScroll>
+            </div>
+          )}
         </VStack>
       </Box>
     </>

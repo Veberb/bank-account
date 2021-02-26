@@ -12,26 +12,20 @@ const Routes: React.FC = () => {
           <nav>
             <ul>
               <li>
-                <a href="#">Item 1</a>
-              </li>
-              <li>
-                <a href="#">Item 2</a>
-              </li>
-              <li>
-                <a href="#">Item 3</a>
+                <a />
               </li>
             </ul>
           </nav>
         </header>
         <div className="content">
-          <aside>Sidebar 1</aside>
+          <aside></aside>
           <main>
             <Switch>
               <Route exact path="/" component={RegisterUser} />
               <Route exact path="/transactions" component={Detail} />
             </Switch>
           </main>
-          <aside>Sidebar 2</aside>
+          <aside></aside>
         </div>
         <footer>Footer</footer>
       </div>
