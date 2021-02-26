@@ -37,7 +37,9 @@ class TransactionService {
     const transactionObj = transactionFactory(args)
     const account = await AccountService.getFirst()
 
-    if (args.type !== TransactionType.Deposit) {
+    if (
+      [TransactionType.Payment, TransactionType.Withdraw].includes(args.type)
+    ) {
       await this.checkIfThereIsEnougthMoney(account.id, args.value)
     }
 
@@ -70,6 +72,15 @@ class TransactionService {
       balanceQuery
     ])
     return { transactions, balance }
+  }
+
+  async incomeTransaction() {
+    const balance = await this.balance()
+    const account = await AccountService.getFirst()
+    return this.create({
+      type: TransactionType.Income,
+      value: balance * (1 + account.percentage / 100)
+    } as Transaction)
   }
 }
 

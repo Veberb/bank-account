@@ -6,6 +6,9 @@ const transactionFactory = args => {
   if (args.type === TransactionType.Withdraw)
     return new TransactionObj(args.type, 'Resgate', args.value)
 
+  if (args.type === TransactionType.Income)
+    return new TransactionObj(args.type, 'Rendimento', args.value)
+
   return new TransactionObj(args.type, 'Pagamento', args.value)
 }
 

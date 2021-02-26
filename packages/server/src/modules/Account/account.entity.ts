@@ -1,13 +1,12 @@
 import {
   Entity,
   PrimaryGeneratedColumn,
-  Column,
   BaseEntity,
   CreateDateColumn,
   UpdateDateColumn,
   OneToOne,
-  JoinColumn,
-  OneToMany
+  OneToMany,
+  Column
 } from 'typeorm'
 import { User } from '../User/user.entity'
 import { Transaction } from '../Transaction/transaction.entity'
@@ -16,6 +15,9 @@ import { Transaction } from '../Transaction/transaction.entity'
 export class Account extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
+
+  @Column({ default: 1 })
+  percentage: number
 
   @CreateDateColumn()
   createdAt: Date
